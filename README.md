@@ -1,40 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+-   **Project Name:** Daily Todo
+-   **Description:** A simple todo app to manage your daily tasks.
+-   **Live Demo:** [daily-todoos.netlify.app](https://daily-todoos.netlify.app)
+-   **Tech Stack:** Next.js, React, Tailwind CSS, Zustand, Firebase, Mantine, date-fns, Bun
+-   **Key Dependencies:** `@mantine/form`, `date-fns`, `firebase`, `next`, `react`, `react-dom`, `react-hot-toast`, `react-icons`, `zustand`
+-   **Dev Tools:** TypeScript, ESLint, Tailwind CSS
+-   **Scripts:** dev, build, start, lint
+-   **Folder Structure:**
+    -   `src/pages/` – App routes and main entry points
+    -   `src/components/` – UI components
+    -   `src/services/` – API and backend integration
+    -   `src/store/` – State management
+    -   `src/libs/` – Shared libraries
+    -   `src/styles/` – Styling and Tailwind config
+
+Here’s a detailed README draft for your project:
+
+---
+
+# Daily Todo
+
+A simple and modern todo app to manage your daily tasks efficiently.
+
+## Live Demo
+
+[https://daily-todoos.netlify.app](https://daily-todoos.netlify.app)
+
+## Features
+
+-   Add, edit, and delete daily tasks
+-   Mark tasks as complete/incomplete
+-   Persistent storage with Firebase
+-   Responsive and clean UI with Mantine and Tailwind CSS
+-   Toast notifications for actions
+-   State management with Zustand
+
+## Tech Stack
+
+-   **Frontend:** Next.js, React, TypeScript, Tailwind CSS, Mantine
+-   **State Management:** Zustand
+-   **Backend/Storage:** Firebase
+-   **Utilities:** date-fns, react-hot-toast, react-icons
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+-   [Bun](https://bun.sh/) (or npm/yarn/pnpm)
+-   Node.js (if not using Bun)
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+```
+
+### Development
+
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Build
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+bun run build
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### Lint
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+bun run lint
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  components/   # Reusable UI components
+  pages/        # Next.js pages/routes
+  services/     # API and backend logic
+  store/        # Zustand state management
+  libs/         # Shared libraries/utilities
+  styles/       # Tailwind and global styles
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Contributions are welcome! Please open an issue or submit a pull request.

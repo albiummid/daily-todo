@@ -29,6 +29,7 @@ export default function Login() {
     const handleSubmit = async () => {
         try {
             setIsLoading(true);
+            form.validate();
             const isValid = form.isValid();
             const { email, password } = form.getValues();
             if (!isValid) throw new Error("Validation failed.");
@@ -64,7 +65,7 @@ export default function Login() {
                     </p>
                 </div>
 
-                <form>
+                <>
                     <div className="space-y-6">
                         <TextField
                             label="Email"
@@ -107,7 +108,7 @@ export default function Login() {
                             </Link>
                         </p>
                     </div>
-                </form>
+                </>
             </div>
         </div>
     );

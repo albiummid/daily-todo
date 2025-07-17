@@ -44,7 +44,9 @@ export default function Register() {
     const handleSubmit = async () => {
         try {
             setIsLoading(true);
+            form.validate();
             const isValid = form.isValid();
+            console.log("IS_VALID", isValid);
             const { name, email, password } = form.getValues();
             if (!isValid) throw new Error("Validation failed.");
 
@@ -92,7 +94,7 @@ export default function Register() {
                     </p>
                 </div>
 
-                <form>
+                <>
                     <div className="space-y-6">
                         <TextField
                             label="Full Name"
@@ -149,7 +151,7 @@ export default function Register() {
                             </button>
                         </p>
                     </div>
-                </form>
+                </>
             </div>
         </div>
     );
