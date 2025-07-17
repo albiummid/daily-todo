@@ -18,7 +18,6 @@ export const credentialSignUp = async (email: string, password: string) => {
             email,
             password
         );
-        console.log(response, "CREATED_USER");
         return response.user;
     } catch (error) {
         console.log("SignUp Error:", error);
@@ -40,7 +39,6 @@ export const updateUserDisplayName = async (displayName: string) => {
             displayName: displayName,
         });
 
-        console.log("Display name updated successfully");
         return currentUser;
     } catch (error) {
         console.log("Update Display Name Error:", error);
@@ -58,7 +56,6 @@ export const credentialSignIn = async (email: string, password: string) => {
             email,
             password
         );
-        console.log(response, "SignedIn user.");
         return response.user;
     } catch (error) {
         console.log("SignUp Error:", error);
