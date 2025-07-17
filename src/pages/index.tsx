@@ -1,9 +1,5 @@
-import DashboardLayout from "@/components/layout/dashboard-layout";
+import Navigate from "@/components/navigate";
 
 export default function Dashboard() {
-    return (
-        <DashboardLayout>
-            <p>Dashboard</p>
-        </DashboardLayout>
-    );
+    return <Navigate href="/dashboard" />;
 }

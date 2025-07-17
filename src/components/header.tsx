@@ -2,7 +2,8 @@
 import { firebaseAuth } from "@/libs/firebase";
 import { useAuthState } from "@/store";
 import { signOut } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineUser } from "react-icons/ai";
@@ -24,17 +25,18 @@ export default function Header() {
             console.error("Logout error:", error);
         }
     };
-
     const navigationLinks = [
         {
             name: "Dashboard",
             href: "/dashboard",
             icon: <MdDashboard className="w-5 h-5" />,
+            isActive: router.asPath.includes("/dashboard"),
         },
         {
             name: "Todo",
-            href: "/todo",
+            href: "/dashboard/todo",
             icon: <MdCheckCircle className="w-5 h-5" />,
+            isActive: router.asPath.includes("/todo"),
         },
     ];
 
@@ -62,22 +64,8 @@ export default function Header() {
                         </div>
                     </div>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex space-x-8">
-                        {navigationLinks.map((link) => (
-                            <button
-                                key={link.name}
-                                onClick={() => router.push(link.href)}
-                                className="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                            >
-                                {link.icon}
-                                <span>{link.name}</span>
-                            </button>
-                        ))}
-                    </nav>
-
                     <div className="flex items-center space-x-4">
-                        <div className="hidden md:flex items-center space-x-3">
+                        <div className="hidden lg:flex items-center space-x-3">
                             <div className="text-right">
                                 <p className="text-sm font-medium text-gray-900">
                                     {user.displayName || user.email}
@@ -100,16 +88,8 @@ export default function Header() {
                         </div>
 
                         <button
-                            onClick={handleLogout}
-                            className="hidden md:flex items-center space-x-2 bg-red-50 text-red-700 hover:bg-red-100 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                        >
-                            <FaSignOutAlt className="w-4 h-4" />
-                            <span>Logout</span>
-                        </button>
-
-                        <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden p-2 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-100"
+                            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-100"
                         >
                             {isMenuOpen ? (
                                 <FaTimes className="w-5 h-5" />
@@ -122,20 +102,20 @@ export default function Header() {
 
                 {/* Mobile Navigation Menu */}
                 {isMenuOpen && (
-                    <div className="md:hidden">
+                    <div className="lg:hidden">
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
                             {navigationLinks.map((link) => (
-                                <button
+                                <Link
                                     key={link.name}
+                                    href={link.href}
                                     onClick={() => {
-                                        router.push(link.href);
                                         setIsMenuOpen(false);
                                     }}
                                     className="flex items-center space-x-3 text-gray-700 hover:text-indigo-600 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors w-full text-left"
                                 >
                                     {link.icon}
                                     <span>{link.name}</span>
-                                </button>
+                                </Link>
                             ))}
 
                             {/* Mobile User Info */}

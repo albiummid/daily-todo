@@ -5,9 +5,11 @@ import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
     signInWithEmailAndPassword,
+    signOut,
     updateProfile,
 } from "firebase/auth";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 export const credentialSignUp = async (email: string, password: string) => {
     try {
@@ -75,7 +77,6 @@ export const useAuthListener = () => {
             firebaseAuth,
             (authUser) => {
                 if (authUser) {
-
                     onLogin(authUser);
                 } else {
                     onLogout();
@@ -97,4 +98,14 @@ export const useAuthListener = () => {
     }, []);
 
     return authStates;
+};
+
+export const logout = async () => {
+    try {
+        await signOut(firebaseAuth);
+        toast.success("Logged out successfully");
+    } catch (error) {
+        toast.error("Failed to logout");
+        console.error("Logout error:", error);
+    }
 };
