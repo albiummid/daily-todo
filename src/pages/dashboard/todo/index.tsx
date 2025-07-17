@@ -9,6 +9,7 @@ import {
     updateTodo,
 } from "@/services/firestore.service";
 import { useForm } from "@mantine/form";
+import { format } from "date-fns";
 import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -149,7 +150,7 @@ export default function TodoPage() {
                                 <textarea
                                     required
                                     placeholder="Your most important todo's description here."
-                                    className="text-xs p-2  h-10 w-full outline-none"
+                                    className="text-xs p-2  w-full outline-none"
                                     {...form.getInputProps("description")}
                                 />
                             </div>
@@ -200,7 +201,7 @@ export default function TodoPage() {
                                         className={
                                             idx % 2 == 0
                                                 ? "bg-gray-white"
-                                                : "bg-gray-100"
+                                                : "bg-gray-100" + " "
                                         }
                                     >
                                         <td className="py-2 px-4 font-medium text-xs lg:text-base">
@@ -210,7 +211,7 @@ export default function TodoPage() {
                                             </p>
                                         </td>
 
-                                        <td className="py-2 lg:px-4 text-xs lg:text-base">
+                                        <td className="lg:px-4 text-xs lg:text-base ">
                                             <span
                                                 className={`px-2 py-2 rounded-lg text-xs font-semibold ${
                                                     todo.status === "completed"
@@ -221,13 +222,14 @@ export default function TodoPage() {
                                                 {capitalizeString(todo.status)}
                                             </span>
                                         </td>
-                                        <td className="py-2 px-4  hidden lg:block">
+                                        <td className="py-2 px-4  hidden lg:flex items-center translate-y-1/2 ">
                                             {todo.created_at &&
                                                 todo.created_at instanceof
                                                     Timestamp &&
-                                                todo.created_at
-                                                    .toDate()
-                                                    .toLocaleString()}
+                                                format(
+                                                    todo.created_at.toDate(),
+                                                    "dd MMM yyyy | hh:mm a"
+                                                )}
                                         </td>
                                         <td className="py-2 px-4 text-center ">
                                             <button

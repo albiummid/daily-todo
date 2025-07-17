@@ -3,6 +3,7 @@ import Navigate from "@/components/navigate";
 import { firebaseAuth } from "@/libs/firebase";
 import { useAuthState } from "@/store";
 import { signOut } from "firebase/auth";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 import toast from "react-hot-toast";
@@ -54,7 +55,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                                             ? pathname === "/dashboard"
                                             : pathname.startsWith(link.href);
                                     return (
-                                        <a
+                                        <Link
                                             key={link.name}
                                             href={link.href}
                                             className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${
@@ -64,7 +65,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                                             }`}
                                         >
                                             {link.name}
-                                        </a>
+                                        </Link>
                                     );
                                 })}
                             </nav>
