@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { capitalizeString } from "@/libs/utils";
 import { getTodos, Todo } from "@/services/firestore.service";
 import { useAuthState } from "@/store";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { FaClock, FaTasks } from "react-icons/fa";
 import { MdCheckCircle, MdPending, MdTrendingUp } from "react-icons/md";
-
 export default function Dashboard() {
     const { user } = useAuthState();
     const [tasks, setTasks] = useState<Todo[]>([]);
@@ -158,7 +159,12 @@ export default function Dashboard() {
                                             {task.title}
                                         </p>
                                         <p className="text-sm text-gray-500">
-                                            {task.date}
+                                            {format(
+                                                new Date(
+                                                    task.created_at as any
+                                                ),
+                                                "dd MMM yyyy | hh:mm"
+                                            )}
                                         </p>
                                     </div>
                                 </div>
