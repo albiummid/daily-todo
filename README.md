@@ -4,7 +4,7 @@ A simple and modern todo app to manage your daily tasks efficiently.
 
 ## Live Demo
 
-[https://daily-todoos.netlify.app](https://daily-todoos.netlify.app)
+[https://daily-todoos.vercel.app](https://daily-todoos.vercel.app)
 
 ## Features
 
