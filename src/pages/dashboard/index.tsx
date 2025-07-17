@@ -25,7 +25,8 @@ export default function Dashboard() {
     const recentTasks = tasks?.slice(0, 5);
 
     useEffect(() => {
-        getTodos().then((data) => {
+        if (!user?.email) return;
+        getTodos(user.email).then((data) => {
             setTasks(data);
         });
     }, []);

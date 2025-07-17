@@ -8,6 +8,7 @@ import {
     Todo,
     updateTodo,
 } from "@/services/firestore.service";
+import { useAuthState } from "@/store";
 import { useForm } from "@mantine/form";
 import { format } from "date-fns";
 import { Timestamp } from "firebase/firestore";
@@ -17,13 +18,8 @@ import { FaClock, FaTrash } from "react-icons/fa";
 import { FiCheckCircle, FiPlusCircle } from "react-icons/fi";
 import { MdCheck, MdModeEdit } from "react-icons/md";
 
-const initialForm = {
-    title: "",
-    description: "",
-    status: "pending" as "pending" | "completed",
-};
-
 export default function TodoPage() {
+    const { user } = useAuthState();
     const [todos, setTodos] = useState<Todo[]>([]);
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -31,11 +27,13 @@ export default function TodoPage() {
         title: string;
         description: string;
         status: "pending" | "completed";
+        creator_email: string;
     }>({
         initialValues: {
             title: "",
             description: "",
             status: "pending",
+            creator_email: user?.email || "",
         },
         validate: {
             title: (v) => !v && "Title is required",
@@ -49,8 +47,9 @@ export default function TodoPage() {
     });
 
     const fetchTodos = async () => {
+        if (!user?.email) return;
         setLoading(true);
-        const data = await getTodos();
+        const data = await getTodos(user?.email);
         setTodos(data);
         setLoading(false);
     };

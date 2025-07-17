@@ -11,6 +11,7 @@ import {
     serverTimestamp,
     Timestamp,
     updateDoc,
+    where,
 } from "firebase/firestore";
 
 const db = getFirestore();
@@ -22,16 +23,22 @@ export interface Todo {
     description: string;
     status: "pending" | "completed";
     created_at: Timestamp | null;
+    creator_email: string;
 }
 
 export async function getTodos(
+    creatorEmail: string,
     props: any = {
         sort: "created_at",
         order: "desc",
     }
 ): Promise<Todo[]> {
     const { sort = "created_at", order = "desc" } = props;
-    const q = query(collection(db, TODOS_COLLECTION), orderBy(sort, order));
+    const q = query(
+        collection(db, TODOS_COLLECTION),
+        where("creator_email", "==", creatorEmail),
+        orderBy(sort, order)
+    );
     const snapshot = await getDocs(q);
     return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Todo));
 }
