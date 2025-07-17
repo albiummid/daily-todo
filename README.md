@@ -1,22 +1,3 @@
--   **Project Name:** Daily Todo
--   **Description:** A simple todo app to manage your daily tasks.
--   **Live Demo:** [daily-todoos.netlify.app](https://daily-todoos.netlify.app)
--   **Tech Stack:** Next.js, React, Tailwind CSS, Zustand, Firebase, Mantine, date-fns, Bun
--   **Key Dependencies:** `@mantine/form`, `date-fns`, `firebase`, `next`, `react`, `react-dom`, `react-hot-toast`, `react-icons`, `zustand`
--   **Dev Tools:** TypeScript, ESLint, Tailwind CSS
--   **Scripts:** dev, build, start, lint
--   **Folder Structure:**
-    -   `src/pages/` – App routes and main entry points
-    -   `src/components/` – UI components
-    -   `src/services/` – API and backend integration
-    -   `src/store/` – State management
-    -   `src/libs/` – Shared libraries
-    -   `src/styles/` – Styling and Tailwind config
-
-Here’s a detailed README draft for your project:
-
----
-
 # Daily Todo
 
 A simple and modern todo app to manage your daily tasks efficiently.
@@ -36,10 +17,13 @@ A simple and modern todo app to manage your daily tasks efficiently.
 
 ## Tech Stack
 
--   **Frontend:** Next.js, React, TypeScript, Tailwind CSS, Mantine
--   **State Management:** Zustand
--   **Backend/Storage:** Firebase
--   **Utilities:** date-fns, react-hot-toast, react-icons
+-   **Folder Structure:**
+    -   `src/pages/` – App routes and main entry points
+    -   `src/components/` – UI components
+    -   `src/services/` – API and backend integration
+    -   `src/store/` – State management
+    -   `src/libs/` – Shared libraries
+    -   `src/styles/` – Styling and Tailwind config
 
 ## Getting Started
 
