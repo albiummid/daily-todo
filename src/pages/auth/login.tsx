@@ -32,7 +32,8 @@ export default function Login() {
             const isValid = form.isValid();
             const { email, password } = form.getValues();
             if (!isValid) throw new Error("Validation failed.");
-            await credentialSignIn(email, password);
+            const user = await credentialSignIn(email, password);
+            toast.success(`Welcome ${user.email} !`);
             // user will be added in authState using authListener
             router.replace("/");
         } catch (error) {

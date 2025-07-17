@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
 
     const sidebarLinks = [
         {
-            name: "Overview",
+            name: "Dashboard",
             href: "/dashboard",
         },
         {
@@ -49,9 +49,6 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                     {/* Sidebar */}
                     <aside className=" hidden min-w-1/5 sticky top-5  bg-white rounded-lg shadow-sm border border-gray-200 p-6 h-[85vh] lg:flex flex-col justify-between min-h-[400px]">
                         <div>
-                            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                                Dashboard
-                            </h2>
                             <nav className="space-y-2">
                                 {sidebarLinks.map((link) => {
                                     const isActive =

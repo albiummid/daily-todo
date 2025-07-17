@@ -111,7 +111,7 @@ export default function Header() {
                                     onClick={() => {
                                         setIsMenuOpen(false);
                                     }}
-                                    className="flex items-center space-x-3 text-gray-700 hover:text-indigo-600 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium transition-colors w-full text-left"
+                                    className="flex items-center space-x-3 text-gray-700 hover:text-indigo-600 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium transition-colors w-full text-left"
                                 >
                                     {link.icon}
                                     <span>{link.name}</span>

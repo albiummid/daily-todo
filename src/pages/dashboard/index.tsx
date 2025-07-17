@@ -1,72 +1,34 @@
 "use client";
 import DashboardLayout from "@/components/layout/dashboard-layout";
+import { capitalizeString } from "@/libs/utils";
+import { getTodos, Todo } from "@/services/firestore.service";
 import { useAuthState } from "@/store";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { FaClock, FaTasks } from "react-icons/fa";
-import {
-    MdAdd,
-    MdCalendarToday,
-    MdCheckCircle,
-    MdPending,
-    MdTrendingUp,
-} from "react-icons/md";
+import { MdCheckCircle, MdPending, MdTrendingUp } from "react-icons/md";
 
 export default function Dashboard() {
     const { user } = useAuthState();
-    const router = useRouter();
+    const [tasks, setTasks] = useState<Todo[]>([]);
+    const pendingTasks = tasks?.filter((x) => x.status === "pending");
+    const completedTasks = tasks?.filter((x) => x.status === "completed");
 
-    // Mock data - replace with real data from your todo service
     const stats = {
-        totalTasks: 12,
-        completedTasks: 8,
-        pendingTasks: 4,
-        completionRate: 67,
+        totalTasks: tasks?.length,
+        completedTasks: completedTasks.length,
+        pendingTasks: pendingTasks.length,
+        completionRate:
+            tasks.length > 0
+                ? Math.round(completedTasks?.length / tasks.length) * 100
+                : 0,
     };
+    const recentTasks = tasks?.slice(0, 5);
 
-    const recentTasks = [
-        {
-            id: 1,
-            title: "Complete project documentation",
-            status: "completed",
-            date: "2025-06-15",
-        },
-        {
-            id: 2,
-            title: "Review code changes",
-            status: "pending",
-            date: "2025-06-16",
-        },
-        {
-            id: 3,
-            title: "Prepare presentation slides",
-            status: "completed",
-            date: "2025-06-17",
-        },
-        {
-            id: 4,
-            title: "Update dependencies",
-            status: "pending",
-            date: "2025-06-18",
-        },
-    ];
-
-    const quickActions = [
-        {
-            title: "Add New Task",
-            icon: <MdAdd className="w-6 h-6" />,
-            href: "dashboard/todo?new=true",
-        },
-        {
-            title: "View All Tasks",
-            icon: <FaTasks className="w-6 h-6" />,
-            href: "dashboard/todo",
-        },
-        {
-            title: "Today's Tasks",
-            icon: <MdCalendarToday className="w-6 h-6" />,
-            href: "dashboard/todo?filter=today",
-        },
-    ];
+    useEffect(() => {
+        getTodos().then((data) => {
+            setTasks(data);
+        });
+    }, []);
 
     const getGreeting = () => {
         const hour = new Date().getHours();
@@ -77,7 +39,7 @@ export default function Dashboard() {
 
     return (
         <DashboardLayout>
-            <div className="space-y-6">
+            <div className="space-y-6 min-h-[80vh]">
                 {/* Welcome Section */}
                 <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg p-6 text-white">
                     <h1 className="text-2xl font-bold mb-2">
@@ -160,31 +122,6 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {/* Quick Actions */}
-                <div className="bg-white rounded-lg border border-gray-200 p-6">
-                    <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                        Quick Actions
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {quickActions.map((action, index) => (
-                            <button
-                                key={index}
-                                onClick={() => {
-                                    router.push(action.href);
-                                }}
-                                className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg hover:border-indigo-300 hover:bg-indigo-50 transition-colors"
-                            >
-                                <div className="text-indigo-600">
-                                    {action.icon}
-                                </div>
-                                <span className="font-medium text-gray-700">
-                                    {action.title}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
                 {/* Recent Activity */}
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                     <h2 className="text-lg font-semibold text-gray-900 mb-4">
@@ -226,13 +163,13 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                                 <span
-                                    className={`px-2 py-1 text-xs font-medium rounded-full ${
+                                    className={`px-2 py-1 text-xs font-medium rounded-lg ${
                                         task.status === "completed"
                                             ? "bg-green-100 text-green-800"
                                             : "bg-orange-100 text-orange-800"
                                     }`}
                                 >
-                                    {task.status}
+                                    {capitalizeString(task.status)}
                                 </span>
                             </div>
                         ))}
