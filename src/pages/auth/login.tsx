@@ -16,8 +16,8 @@ export default function Login() {
     const form = useForm({
         mode: "controlled",
         initialValues: {
-            email: "albi.ummid@gmail.com",
-            password: "password",
+            email: "",
+            password: "",
         },
         validate: {
             email: (value) =>
