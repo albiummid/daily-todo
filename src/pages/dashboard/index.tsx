@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { capitalizeString } from "@/libs/utils";
@@ -160,9 +159,9 @@ export default function Dashboard() {
                                         </p>
                                         <p className="text-sm text-gray-500">
                                             {format(
-                                                new Date(
-                                                    task.created_at as any
-                                                ),
+                                                task?.created_at
+                                                    ? task.created_at.toDate()
+                                                    : new Date(),
                                                 "dd MMM yyyy | hh:mm"
                                             )}
                                         </p>
