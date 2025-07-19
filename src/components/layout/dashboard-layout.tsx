@@ -45,7 +45,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
     return (
         <div className="min-h-screen bg-gray-50">
             <Header />
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="max-w-7xl mx-auto lg:px-8 py-6">
                 <div className="flex flex-col lg:flex-row gap-6">
                     {/* Sidebar */}
                     <aside className=" hidden min-w-1/5 sticky top-5  bg-white rounded-lg shadow-sm border border-gray-200 p-6 h-[85vh] lg:flex flex-col justify-between min-h-[400px]">
@@ -81,10 +81,8 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                         </button>
                     </aside>
                     {/* Main Content */}
-                    <main className="flex-1">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                            {children}
-                        </div>
+                    <main className="flex-1 bg-white rounded-lg lg:shadow-sm lg:border border-gray-200 p-2 lg:p-6">
+                        {children}
                     </main>
                 </div>
             </div>
