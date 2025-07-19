@@ -18,14 +18,19 @@ Netlify :: [https://daily-todoos.netlify.app](https://daily-todoos.netlify.app)
 -   State management with Zustand
 
 ## Tech Stack
+ Next.js, React, Tailwind CSS, Zustand, Firebase, Mantine, date-fns, Bun
 
--   **Folder Structure:**
-    -   `src/pages/` – App routes and main entry points
-    -   `src/components/` – UI components
-    -   `src/services/` – API and backend integration
-    -   `src/store/` – State management
-    -   `src/libs/` – Shared libraries
-    -   `src/styles/` – Styling and Tailwind config
+## Project Structure
+
+```
+src/
+  components/   # Reusable UI components
+  pages/        # Next.js pages/routes
+  services/     # API and backend logic
+  store/        # Zustand state management
+  libs/         # Shared libraries/utilities
+  styles/       # Tailwind and global styles
+```
 
 ## Getting Started
 
@@ -58,18 +63,6 @@ bun run build
 
 ```bash
 bun run lint
-```
-
-## Project Structure
-
-```
-src/
-  components/   # Reusable UI components
-  pages/        # Next.js pages/routes
-  services/     # API and backend logic
-  store/        # Zustand state management
-  libs/         # Shared libraries/utilities
-  styles/       # Tailwind and global styles
 ```
 
 ## Contributing
