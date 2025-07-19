@@ -1,5 +1,6 @@
 "use client";
 import DashboardLayout from "@/components/layout/dashboard-layout";
+import LoadingSpinner from "@/components/loading-spinner";
 import { capitalizeString } from "@/libs/utils";
 import {
     addTodo,
@@ -11,7 +12,6 @@ import {
 import { useAuthState } from "@/store";
 import { useForm } from "@mantine/form";
 import { format } from "date-fns";
-import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaClock, FaTrash } from "react-icons/fa";
@@ -48,15 +48,20 @@ export default function TodoPage() {
 
     const fetchTodos = async () => {
         if (!user?.email) return;
-        setLoading(true);
         const data = await getTodos(user?.email);
         setTodos(data);
-        setLoading(false);
     };
 
     useEffect(() => {
-        fetchTodos();
-    }, []);
+        fetchTodos().finally(() => {
+            setLoading(false);
+        });
+
+        return () => {
+            setLoading(true);
+            setTodos([]);
+        };
+    }, [user]);
 
     useEffect(() => {
         if (editingId) {
@@ -78,8 +83,6 @@ export default function TodoPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
-
         const valid = form.isValid();
         if (!valid) {
             toast.error("All field must be filled");
@@ -96,7 +99,6 @@ export default function TodoPage() {
         await fetchTodos();
         form.reset();
         setEditingId(null);
-        setLoading(false);
     };
 
     return (
@@ -170,72 +172,65 @@ export default function TodoPage() {
                     </div>
                 </form>
                 {loading ? (
-                    <div>Loading...</div>
+                    <LoadingSpinner />
                 ) : todos.length === 0 ? (
                     <div className="text-gray-500 text-center">No todos</div>
                 ) : (
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full rounded-lg border-l border-r border-b border-gray-200">
-                            <thead>
-                                <tr className="border border-gray-200 rounded-lg py-10">
-                                    <th className="py-2 px-4 text-left">
-                                        Tasks
-                                    </th>
+                    <table className="min-w-full rounded-lg border-l border-r border-b  border-gray-200 overflow-x-auto text-xs lg:text-sm">
+                        <thead className=" text-left">
+                            <tr className="border border-gray-200">
+                                <th className="p-4">Tasks</th>
+                                <th className="p-4">Status</th>
+                                <th className="hidden p-4  lg:flex min-w-48">
+                                    Created At
+                                </th>
+                                <th className="p-4 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="">
+                            {todos.map((todo, idx) => (
+                                <tr
+                                    key={todo.id}
+                                    className={`${
+                                        idx % 2 == 0
+                                            ? "bg-gray-white"
+                                            : "bg-gray-100"
+                                    } `}
+                                >
+                                    <td className=" p-4 font-medium">
+                                        {todo.title}
+                                        <p className="font-normal lg:block mt-2">
+                                            {todo.description}
+                                        </p>
+                                    </td>
 
-                                    <th className="py-2 lg:px-4 text-left">
-                                        Status
-                                    </th>
-                                    <th className="py-2 px-4 text-left  hidden lg:block">
-                                        Created At
-                                    </th>
-                                    <th className="py-2 px-4 text-center">
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {todos.map((todo, idx) => (
-                                    <tr
-                                        key={todo.id}
-                                        className={
-                                            idx % 2 == 0
-                                                ? "bg-gray-white"
-                                                : "bg-gray-100" + " "
-                                        }
-                                    >
-                                        <td className="py-2 px-4 font-medium text-xs lg:text-base">
-                                            {todo.title}
-                                            <p className="font-normal lg:block mt-2">
-                                                {todo.description}
-                                            </p>
-                                        </td>
-
-                                        <td className="lg:px-4 text-xs lg:text-base ">
-                                            <span
-                                                className={`px-2 py-2 rounded-lg text-xs font-semibold ${
-                                                    todo.status === "completed"
-                                                        ? "bg-green-100 text-green-700"
-                                                        : "bg-yellow-100 text-yellow-700"
-                                                }`}
-                                            >
-                                                {capitalizeString(todo.status)}
-                                            </span>
-                                        </td>
-                                        <td className="py-2 px-4  hidden lg:flex items-center translate-y-1/2 ">
+                                    <td className="">
+                                        <span
+                                            className={`rounded-lg px-2 py-1 font-semibold ${
+                                                todo.status === "completed"
+                                                    ? "bg-green-100 text-green-700"
+                                                    : "bg-yellow-100 text-yellow-700"
+                                            }`}
+                                        >
+                                            {capitalizeString(todo.status)}
+                                        </span>
+                                    </td>
+                                    <td className="p-4 hidden lg:table-cell">
+                                        <span className="">
                                             {todo.created_at &&
-                                                todo.created_at instanceof
-                                                    Timestamp &&
                                                 format(
                                                     todo.created_at.toDate(),
-                                                    "dd MMM yyyy | hh:mm a"
+                                                    "dd MMM yyyy hh:mm a"
                                                 )}
-                                        </td>
-                                        <td className="py-2 px-4 text-center ">
+                                        </span>
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="grid grid-cols-3 gap-2 w-20 place-items-center">
                                             <button
                                                 hidden={
                                                     todo.status === "completed"
                                                 }
-                                                className={` text-white bg-green-600 border border-green-600  p-1  rounded-lg cursor-pointer mr-3 `}
+                                                className={` text-white bg-green-600 border border-green-600  p-1  rounded-lg cursor-pointer`}
                                                 onClick={async () => {
                                                     await updateTodo(todo.id, {
                                                         status: "completed",
@@ -252,7 +247,7 @@ export default function TodoPage() {
                                                 hidden={
                                                     todo.status === "pending"
                                                 }
-                                                className={` text-white bg-yellow-400 border border-yellow-400  p-1  rounded-lg cursor-pointer mr-3 `}
+                                                className={` text-white bg-yellow-400 border border-yellow-400  p-1  rounded-lg cursor-pointer`}
                                                 onClick={async () => {
                                                     await updateTodo(todo.id, {
                                                         status: "pending",
@@ -266,7 +261,7 @@ export default function TodoPage() {
                                                 <FaClock />
                                             </button>
                                             <button
-                                                className="bg-indigo-600  text-white  p-1  rounded-lg cursor-pointer mr-3"
+                                                className="bg-indigo-600  text-white  p-1  rounded-lg cursor-pointer"
                                                 onClick={() =>
                                                     setEditingId(todo.id)
                                                 }
@@ -274,19 +269,19 @@ export default function TodoPage() {
                                                 <MdModeEdit />
                                             </button>
                                             <button
-                                                className="text-red-600 cursor-pointer"
+                                                className="bg-red-600 cursor-pointer p-1 rounded-lg text-white"
                                                 onClick={() =>
                                                     handleDelete(todo.id)
                                                 }
                                             >
                                                 <FaTrash />
                                             </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 )}
             </div>
         </DashboardLayout>
