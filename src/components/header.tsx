@@ -49,7 +49,7 @@ export default function Header() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo Section */}
-                    <div className="flex items-center">
+                    <Link href={"/dashboard"} className="flex items-center">
                         <div className="flex-shrink-0">
                             <div className="flex items-center space-x-2">
                                 <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
@@ -62,7 +62,7 @@ export default function Header() {
                                 </span>
                             </div>
                         </div>
-                    </div>
+                    </Link>
 
                     <div className="flex items-center space-x-4">
                         <div className="hidden lg:flex items-center space-x-3">
