@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "@/components/layout/dashboard-layout";
-import LoadingSpinner from "@/components/loading-spinner";
 import { capitalizeString } from "@/libs/utils";
 import {
     addTodo,
@@ -172,7 +171,7 @@ export default function TodoPage() {
                     </div>
                 </form>
                 {loading ? (
-                    <LoadingSpinner />
+                    <></>
                 ) : todos.length === 0 ? (
                     <div className="text-gray-500 text-center">No todos</div>
                 ) : (
