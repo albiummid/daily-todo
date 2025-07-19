@@ -29,7 +29,7 @@ export default function Dashboard() {
         getTodos(user.email).then((data) => {
             setTasks(data);
         });
-    }, []);
+    }, [user]);
 
     const getGreeting = () => {
         const hour = new Date().getHours();
