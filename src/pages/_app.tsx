@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
     useAuthListener();
     return (
         <>
-            <Toaster position="top-right" reverseOrder={false} />
+            <Toaster position="bottom-center" reverseOrder={false} />
             <Component {...pageProps} />
         </>
     );
