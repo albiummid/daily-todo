@@ -8,13 +8,15 @@ import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 import toast from "react-hot-toast";
 import { FaSignOutAlt } from "react-icons/fa";
+import LoadingSpinner from "../loading-spinner";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
     const { isLoading, isAuthenticated } = useAuthState();
     const pathname = usePathname();
     const router = useRouter();
 
-    if (isLoading) return <p>Loading...</p>;
+    if (!isLoading) return <LoadingSpinner />;
+
     if (!isAuthenticated) return <Navigate href="/auth/login" />;
 
     const sidebarLinks = [
