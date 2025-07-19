@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
     const pathname = usePathname();
     const router = useRouter();
 
-    if (!isLoading) return <LoadingSpinner />;
+    if (isLoading) return <LoadingSpinner />;
 
     if (!isAuthenticated) return <Navigate href="/auth/login" />;
 
